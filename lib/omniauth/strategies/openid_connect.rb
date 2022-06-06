@@ -282,6 +282,9 @@ module OmniAuth
             parse_jwk_key(options.client_jwk_signing_key)
           elsif options.client_x509_signing_key
             parse_x509_key(options.client_x509_signing_key)
+          elsif client_options.jwks_uri
+            raw_key = ::OpenIDConnect.http_client.get_content(client_options.jwks_uri)
+            parse_jwk_key(raw_key)
           end
         end
       end
